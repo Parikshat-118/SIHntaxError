@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Test</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #test-map { 
+            height: 400px; 
+            width: 100%;
+            border: 2px solid #ccc;
+        }
+        .info {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h2>🗺️ Map Loading Test</h2>
+        <p>Testing if Leaflet maps load correctly...</p>
+    </div>
+    
+    <div id="test-map"></div>
+    
+    <div class="info">
+        <p id="status">Loading map...</p>
+        <button onclick="location.href='route-planner.html'">Go to Route Planner</button>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const map = L.map('test-map').setView([28.6139, 77.2090], 10);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+                
+                L.marker([28.6139, 77.2090]).addTo(map)
+                    .bindPopup('Delhi, India - Test Marker')
+                    .openPopup();
+                    
+                document.getElementById('status').textContent = '✅ Map loaded successfully!';
+                document.getElementById('status').style.color = 'green';
+                
+            } catch (error) {
+                document.getElementById('status').textContent = '❌ Map loading failed: ' + error.message;
+                document.getElementById('status').style.color = 'red';
+                console.error('Map error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
